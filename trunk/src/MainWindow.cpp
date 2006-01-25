@@ -243,6 +243,7 @@ void MainWindow::updateImageDone( bool havenew ) {
     img = img.scaled( settings->value( "bgwidth" ).toInt() ,
                       settings->value( "bgheight" ).toInt() ,
                       Qt::KeepAspectRatio );
+
     img.save( fn + ".jpg", "jpg", 80 );
     img = img.scaled( settings->value( "thumbwidth" ).toInt() ,
                       settings->value( "thumbheight" ).toInt() ,

@@ -29,7 +29,31 @@
 #include "MainWindow.h"
 #include <QApplication>
 
+void myMessageOutput(QtMsgType type, const char *msg)
+    {
+    	FILE *fp = fopen("qapod-debug.txt", "a");
+        switch (type) {
+        case QtDebugMsg:
+            fprintf(fp, "Debug: %s\n", msg);
+            break;
+        case QtWarningMsg:
+            fprintf(fp, "Warning: %s\n", msg);
+            break;
+        case QtCriticalMsg:
+            fprintf(fp, "Critical: %s\n", msg);
+            break;
+        case QtFatalMsg:
+            fprintf(fp, "Fatal: %s\n", msg);
+            abort();
+        }
+        fclose(fp);
+    }
+    
+
 int main( int argc, char *argv[] ) {
+#ifdef WIN32
+  qInstallMsgHandler(myMessageOutput);
+#endif
   QApplication app( argc, argv );
   MainWindow mw(argc, argv);
   mw.show();
