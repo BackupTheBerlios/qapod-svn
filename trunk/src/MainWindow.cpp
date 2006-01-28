@@ -305,6 +305,18 @@ QString getShellRes( QString cmd, QStringList args ) {
   return QString( result );
 }
 
+QString systemErrorToString(DWORD lastErr)
+{
+  char buf[1025];
+  
+  DWORD lastError = lastErr;
+  if (lastErr == 0)
+    lastError = GetLastError();
+  DWORD result = ::FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM,NULL,lastError,LANG_USER_DEFAULT,buf,sizeof(buf),NULL);
+  return QString("Error %1 : %2").arg(lastError).arg(buf);
+}
+
+
 void MainWindow::setBackground( QString name ) {
   if ( settings->value( "desktop" ) == "kde" ) {
     getShellRes( "dcop", QStringList() << "kdesktop" << "KBackgroundIface" << "setWallpaper" << name << "6" );
@@ -313,8 +325,11 @@ void MainWindow::setBackground( QString name ) {
     QString winfile = settings->value( "imagelocation" ).toString() + "/qapod.bmp";
     QImage img( name );
     img.save( winfile, "bmp", 0 );
-    char * sss = QDir::convertSeparators( winfile ).toAscii().data();
+    QByteArray local = QDir::convertSeparators( winfile ).toLocal8Bit();
+    char *sss = local.data();
     long res = SystemParametersInfoA( SPI_SETDESKWALLPAPER, 0, sss, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE );   //SPIF_SENDCHANGE |
+    if (res==0)
+      QMessageBox::information(this,"yoo",systemErrorToString(GetLastError()));
 #endif
 
   }
