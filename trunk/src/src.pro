@@ -17,6 +17,9 @@ SOURCES += qapod.cpp \
 CONFIG += designer
 QT += network
 TARGET=../bin/qapod
-win32{
+
+# @aron: ok so?
+win32-msvc{
   LIBS+=user32.lib shell32.lib
 }
+
