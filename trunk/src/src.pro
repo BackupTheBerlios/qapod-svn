@@ -7,11 +7,13 @@ FORMS += MainWindow.ui
 IDLS += MainWindow.ui 
 HEADERS += MainWindow.h \
            getterapod.h \
-           getter.h 
+           getter.h \
+           getterepod.h 
 SOURCES += qapod.cpp \
            MainWindow.cpp \
            getterapod.cpp \
-           getter.cpp 
+           getter.cpp \
+           getterepod.cpp 
 CONFIG += designer
 QT += network
 TARGET=../bin/qapod

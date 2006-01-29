@@ -17,7 +17,7 @@
 *   Free Software Foundation, Inc.,                                       *
 *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 ***************************************************************************/
-#include "getterapod.h"
+#include "getterepod.h"
 
 
 #include <QObject>
@@ -31,15 +31,15 @@
 	@author wolfgang loeffler <wolfgang.loeffler@entropia.biz>
  */
 
-GetterAPOD::GetterAPOD( QObject *parent, QString lastmod ) {
-  hostname = "antwrp.gsfc.nasa.gov";
+GetterEPOD::GetterEPOD( QObject *parent, QString lastmod ) {
   parentObj = parent;
   lastModified = lastmod;
+  hostname = "epod.usra.edu";
 }
 
-QImage GetterAPOD::getImage() { return image; }
+QImage GetterEPOD::getImage() { return image; }
 
-void GetterAPOD::update() {
+void GetterEPOD::update() {
   http = new QHttp( this );
   buffer = new QBuffer( this );
   image = QImage();
@@ -47,58 +47,71 @@ void GetterAPOD::update() {
   connect( http, SIGNAL( requestFinished( int, bool ) ), this, SLOT( httpRequestFinished( int, bool ) ) );
   connect( http, SIGNAL( dataReadProgress( int, int ) ), parentObj, SLOT( updateDataReadProgress( int, int ) ) );
 
-  QHttpRequestHeader header( "GET", "/apod/astropix.html" );
+  QHttpRequestHeader header( "GET", "/" );
   header.setValue( "Host", hostname );
 
   // das geht nicht, da apod's webserver kein "last-modified" schickt :-(
-  //header.setValue("If-Modified-Since", lastModified);
+  header.setValue( "If-Modified-Since", lastModified );
 
   header.setValue( "User-Agent", "qapod" );
   http->setHost( hostname );
   httpIdIndex = http->request( header, 0, buffer );
 }
 
-QString GetterAPOD::getDescription() { return description; }
-QString GetterAPOD::getLastModified() { return lastModified; }
+QString GetterEPOD::getDescription() { return description; }
+QString GetterEPOD::getLastModified() { return lastModified; }
 
 
-void GetterAPOD::httpRequestFinished( int id, bool error ) {
+void GetterEPOD::httpRequestFinished( int id, bool error ) {
   QHttpResponseHeader resp = http->lastResponse ();
 
   if ( error != 0 ) return ;
 
   if ( httpIdIndex == id ) { // got index.html
-    //lastModified = resp.value( "last-modified" ); // s.o. :-(
+    //QString newLastModified = resp.value( "last-modified" ); // s.o. :-(
+
+    // title
     QString s( buffer->buffer().data() );
-    int posi = s.indexOf( "<a href=\"image" );
+    description = "";
+    int posi = s.indexOf( "<H2>" );
     if ( posi > 0 ) {
-      int endpos = s.indexOf( ">", posi );
+      int endpos = s.indexOf( "</H2>", posi );
       if ( endpos > 0 ) {
-        QString link = s.mid( posi + 9, endpos - posi - 10 );
-        if ( link == lastModified ) {
-          qDebug() << "nothing new...";
-          emit ( updateFinished( false ) );
-          return ;
-        } else {
-          lastModified = link;
-        }
-
-
-        posi = s.indexOf( "</center>" , endpos );
-        if ( posi > 0 ) {
-          posi += 9;
-          int endpos = s.indexOf( "<b> Tomorrow's picture: </b>", posi );
-          if ( endpos > 0 ) {
-            description = s.mid( posi, endpos - posi );
-          }
-        }
-        buffer = new QBuffer( this );
-        http->setHost( hostname );
-        httpIdImage = http->get( "/apod/" + link, buffer );
+        description = s.mid( posi, endpos - posi );
+      }
+    }
+    // link
+    QString link = "";
+    posi = s.indexOf( "<A HREF= \"archive" );
+    if ( posi > 0 ) {
+      int endpos = s.indexOf( "TARGET=\"_window\">", posi );
+      if ( endpos > 0 ) {
+        link = s.mid( posi + 10, endpos - posi - 12 );
+        qDebug() << "link=" << link;
       }
     }
 
+    if ( link == lastModified ) {
+      qDebug() << "nothing new...";
+      emit ( updateFinished( false ) );
+      return ;
+    } else {
+      lastModified = link;
+    }
 
+    // descr
+    posi = s.indexOf( "</A>", posi );
+    if ( posi > 0 ) {
+      int endpos = s.indexOf( "Coming soon...", posi );
+      if ( endpos > 0 ) {
+        description += s.mid( posi + 4, endpos - posi - 5 );
+      }
+    }
+    if ( link != "" ) {
+      buffer = new QBuffer( this );
+      http->setHost( hostname );
+      httpIdImage = http->get( "/" + link, buffer );
+    }
 
   } else if ( httpIdImage == id ) { // got image!
     buffer->open( QBuffer::ReadWrite );
@@ -106,7 +119,5 @@ void GetterAPOD::httpRequestFinished( int id, bool error ) {
     emit ( updateFinished( true ) );
   }
 }
-
-
 
 

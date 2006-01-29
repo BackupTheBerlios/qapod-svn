@@ -12,3 +12,9 @@ run in auto mode:
 	* commandline arg must contain "auto"
 
 
+
+
+
+todo:
+	other daily pictures: http://members.aol.com/gca7sky/daily.htm
+

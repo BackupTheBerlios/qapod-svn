@@ -23,6 +23,7 @@
 
 #include "ui_MainWindow.h"
 #include "getterapod.h"
+#include "getterepod.h"
 #include "getter.h"
 #include <QString>
 #include <QImage>
@@ -104,11 +105,10 @@ MainWindow::MainWindow( int argc, char *argv[], QWidget *parent ) : QMainWindow(
   ui.setupUi( this );
   ui.desktopType->addItem( "KDE", "kde" );
   ui.desktopType->addItem( "w2k/xp", "winxp" );
-  ui.sourceType->addItem( "APOD", "apod" );
-  ui.sourceType->addItem( "Sun", "sun" );
+  ui.sourceType->addItem( "Astronomic POD", "apod" );
+  ui.sourceType->addItem( "Earth Science POD", "epod" );
 
   connect( ui.updateNow, SIGNAL( clicked() ), this, SLOT( updateImage() ) );
-  connect( ui.updateList, SIGNAL( clicked() ), this, SLOT( updateList() ) );
   connect( ui.pbSaveSettings, SIGNAL( clicked() ), this, SLOT( saveSettings() ) );
   connect( ui.pbBrowseImageLocation, SIGNAL( clicked() ), this, SLOT( browseImageLocation() ) );
   connect( ui.listView, SIGNAL( clicked ( const QModelIndex & ) ), this, SLOT( listViewclicked( const QModelIndex & ) ) );
@@ -206,6 +206,8 @@ void MainWindow::updateImage() {
   QString st( settings->value( "sourcetype" ).toString() );
   if ( st == "apod" ) {
     getter = new GetterAPOD( this, settings->value( "apod:lastmodified" ).toString() );
+  } else if ( st == "epod" ) {
+    getter = new GetterEPOD( this, settings->value( "apod:lastmodified" ).toString() );
   }
 
   connect ( getter, SIGNAL( updateFinished( bool ) ), this, SLOT( updateImageDone( bool ) ) );
@@ -260,6 +262,8 @@ void MainWindow::updateImageDone( bool havenew ) {
   }
   // autoclose?
   if ( modeAuto && ( settings->value( "autoclose" ).toInt() == 2 ) ) close();
+  
+  updateList();
 }
 
 
@@ -305,17 +309,17 @@ QString getShellRes( QString cmd, QStringList args ) {
   return QString( result );
 }
 
-QString systemErrorToString(DWORD lastErr)
-{
-  char buf[1025];
-  
-  DWORD lastError = lastErr;
-  if (lastErr == 0)
-    lastError = GetLastError();
-  DWORD result = ::FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM,NULL,lastError,LANG_USER_DEFAULT,buf,sizeof(buf),NULL);
-  return QString("Error %1 : %2").arg(lastError).arg(buf);
-}
+#ifdef WIN32
+QString systemErrorToString( DWORD lastErr ) {
+  char buf[ 1025 ];
 
+  DWORD lastError = lastErr;
+  if ( lastErr == 0 )
+    lastError = GetLastError();
+  DWORD result = ::FormatMessageA( FORMAT_MESSAGE_FROM_SYSTEM, NULL, lastError, LANG_USER_DEFAULT, buf, sizeof( buf ), NULL );
+  return QString( "Error %1 : %2" ).arg( lastError ).arg( buf );
+}
+#endif
 
 void MainWindow::setBackground( QString name ) {
   if ( settings->value( "desktop" ) == "kde" ) {
@@ -328,8 +332,8 @@ void MainWindow::setBackground( QString name ) {
     QByteArray local = QDir::convertSeparators( winfile ).toLocal8Bit();
     char *sss = local.data();
     long res = SystemParametersInfoA( SPI_SETDESKWALLPAPER, 0, sss, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE );   //SPIF_SENDCHANGE |
-    if (res==0)
-      QMessageBox::information(this,"yoo",systemErrorToString(GetLastError()));
+    if ( res == 0 )
+      QMessageBox::information( this, "yoo", systemErrorToString( GetLastError() ) );
 #endif
 
   }

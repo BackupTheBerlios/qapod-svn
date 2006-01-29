@@ -17,8 +17,8 @@
 *   Free Software Foundation, Inc.,                                       *
 *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 ***************************************************************************/
-#ifndef GETTERAPOD_H
-#define GETTERAPOD_H
+#ifndef GETTEREPOD_H
+#define GETTEREPOD_H
 
 #include <QObject>
 #include <QHttp>
@@ -26,14 +26,13 @@
 #include <QImage>
 #include "getter.h"
 
-
 /**
 	@author wolfgang loeffler <wolfgang.loeffler@entropia.biz>
 */
-class GetterAPOD : public Getter {
+class GetterEPOD : public Getter {
     Q_OBJECT
   public:
-    GetterAPOD( QObject *parent = 0, QString lastmod = "" ) ;
+    GetterEPOD( QObject *parent = 0, QString lastmod = "" ) ;
     QImage getImage() ;
     void update() ;
     QString getDescription() ;
@@ -56,7 +55,6 @@ class GetterAPOD : public Getter {
     QObject *parentObj;
     QString lastModified;
     QString hostname;
-
 };
 
 #endif
