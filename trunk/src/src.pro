@@ -22,4 +22,10 @@ TARGET=../bin/qapod
 win32-msvc{
   LIBS+=user32.lib shell32.lib
 }
+win32-msvc.net{
+  LIBS+=user32.lib shell32.lib
+}
+win32-msvc2005{
+  LIBS+=user32.lib shell32.lib
+}
 

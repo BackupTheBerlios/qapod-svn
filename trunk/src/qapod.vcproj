@@ -309,18 +309,6 @@
 			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}"
 			>
 			<File
-				RelativePath="debug\moc_getter.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="release\moc_getter.cpp"
 				>
 				<FileConfiguration
@@ -333,7 +321,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="debug\moc_getterapod.cpp"
+				RelativePath="debug\moc_getter.cpp"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -357,17 +345,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="release\moc_MainWindow.cpp"
+				RelativePath="debug\moc_getterapod.cpp"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -386,8 +367,13 @@
 						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="release\moc_MainWindow.cpp"
+				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
