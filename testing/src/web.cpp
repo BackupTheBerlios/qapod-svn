@@ -52,7 +52,7 @@ QeEventLoop::QeEventLoop( void ) : QThread() {
   started = false;
   start();
   while (!started)
-    sleep(100);
+    msleep(100);
 }
 
 QeEventLoop::~QeEventLoop( void ) {}

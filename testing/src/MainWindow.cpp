@@ -103,6 +103,7 @@ void MyDelegate::setDir( QString dir ) {
 }
 
 MainWindow::MainWindow( int argc, char *argv[], QWidget *parent ) : QMainWindow( parent ) {
+  eventLoop= NULL;
   modeAuto = false;
   ui.setupUi( this );
   ui.desktopType->addItem( "KDE", "kde" );
