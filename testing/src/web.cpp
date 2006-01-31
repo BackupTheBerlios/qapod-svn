@@ -26,21 +26,20 @@ Web::Web( QObject *parent, QString hostname, QString location , QBuffer *buffer 
 }
 
 void Web::run() {
-  http = new QHttp(this);
-  connect( http, SIGNAL( requestFinished( int, bool ) ), this, SLOT( httpRequestFinished( int, bool ) ) , Qt::QueuedConnection);
+  http = new QHttp( this );
+  connect( http, SIGNAL( requestFinished( int, bool ) ), this, SLOT( httpRequestFinished( int, bool ) ) , Qt::QueuedConnection );
   http->setHost( host );
   id = http->get( "/" + loc , buff );
-  
+
   exec();
 }
 
 void Web::httpRequestFinished( int httpid, bool error ) {
   qDebug() << "finished: httpid=" << httpid << " id=" << id;
-  sleep(2);
+  sleep( 2 );
   qDebug() << "finished: httpid=" << httpid << " id=" << id;
-  
-  if ( httpid != id ) {}
-  else {
+
+  if ( httpid != id ) {} else {
     quit();
   }
 }
@@ -48,3 +47,13 @@ void Web::httpRequestFinished( int httpid, bool error ) {
 Web::~Web() {}
 
 
+QeEventLoop::QeEventLoop( void ) : QThread() {
+  start();
+}
+
+QeEventLoop::~QeEventLoop( void ) {}
+
+
+void QeEventLoop::run( void ) {
+  exec();
+}

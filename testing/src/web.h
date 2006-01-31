@@ -29,7 +29,7 @@
 class Web : public QThread {
     Q_OBJECT
   public:
-    Web( QObject *parent, QString hostname, QString location, QBuffer *buffer);
+    Web( QObject *parent, QString hostname, QString location, QBuffer *buffer );
     ~Web();
     void run();
   private slots:
@@ -43,6 +43,17 @@ class Web : public QThread {
     int id;
     QString host;
     QString loc;
+};
+
+class QeEventLoop : public QThread {
+  public:
+    //! Constructor
+    QeEventLoop( void );
+    //! Destructor
+    ~QeEventLoop( void );
+  protected:
+    //! The Thread method, it just calls QThread::exec()
+    void run();
 };
 
 #endif

@@ -209,7 +209,12 @@ void MainWindow::browseImageLocation() {
 void MainWindow::updateImage( QString st ) {
   
   QBuffer *buffer = new QBuffer();
+  
+  if (eventLoop==NULL) { 
+    eventLoop = new QeEventLoop(); 
+  }
   Web *web = new Web( this, "www.google.com", "/", buffer );
+  web->moveToThread(eventLoop);
   qDebug() << "buffer=" << buffer->data();
   web->start();
   return;

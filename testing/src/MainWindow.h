@@ -36,6 +36,7 @@
 #include <QItemDelegate>
 #include <QAbstractItemDelegate>
 #include <QPainter>
+#include "web.h"
 
 #define FILEFORMAT "yyyyMMddhhmmss"
 #define ICONWIDTH 100
@@ -102,6 +103,7 @@ class MainWindow : public QMainWindow {
     MyDelegate delegate;
     bool modeAuto;
     QStringList getters;
+    QeEventLoop *eventLoop;
 };
 
 
