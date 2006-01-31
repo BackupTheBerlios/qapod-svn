@@ -19,19 +19,20 @@
 ***************************************************************************/
 #include "web.h"
 
-Web::Web( QObject *parent, QString hostname, QString location , QBuffer *buffer ) : QObject( parent ) {
+Web::Web( QObject *parent, QString hostname, QString location , QBuffer *buffer ) : QThread( parent ) {
   host = hostname;
   loc = location;
   buff = buffer;
+  start();
 }
 
-void Web::start() {
+void Web::run() {
   http = new QHttp( this );
   connect( http, SIGNAL( requestFinished( int, bool ) ), this, SLOT( httpRequestFinished( int, bool ) ) , Qt::QueuedConnection );
   http->setHost( host );
   id = http->get( "/" + loc , buff );
 
-//  exec();
+  exec();
 }
 
 void Web::httpRequestFinished( int httpid, bool error ) {

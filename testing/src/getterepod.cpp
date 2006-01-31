@@ -46,7 +46,7 @@ void GetterEPOD::update() {
   
   
   Web *web = new Web( this, hostname, "/", buffer );
-  QMetaObject::invokeMethod(web, "start", Qt::QueuedConnection);
+  //QMetaObject::invokeMethod(web, "start", Qt::QueuedConnection);
   qDebug() << "nach web.start()";
   
   return;

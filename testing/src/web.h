@@ -26,13 +26,13 @@
 /**
 	@author wolfgang loeffler <wolfgang.loeffler@entropia.biz>
 */
-class Web : public QObject {
+class Web : public QThread {
     Q_OBJECT
   public:
     Web( QObject *parent, QString hostname, QString location, QBuffer *buffer );
     ~Web();
-  public slots:  
-    void start();
+  protected: //public slots:  
+    void run();
   private slots:
     void httpRequestFinished( int httpid, bool error ) ;
 
