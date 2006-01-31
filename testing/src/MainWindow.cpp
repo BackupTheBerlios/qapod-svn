@@ -214,11 +214,10 @@ void MainWindow::updateImage( QString st ) {
   if (eventLoop==NULL) { 
     eventLoop = new QeEventLoop(); 
   }
-  while (!eventLoop->isRunning()) {usleep(1); }
   qDebug() << "eventLoop started";
-  Web *web = new Web( this, "www.google.com", "/", buffer );
+  Web *web = new Web( 0, "www.google.com", "/", buffer );
   web->moveToThread(eventLoop);
-  QMetaObject::invokeMethod(web, "start", Qt::QueuedConnection);
+  //QMetaObject::invokeMethod(web, "start", Qt::QueuedConnection);
   qDebug() << "buffer=" << buffer->data();
   //web->start();
   return;
