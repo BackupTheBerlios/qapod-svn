@@ -46,8 +46,9 @@ void GetterEPOD::update() {
   
   
   Web *web = new Web( this, hostname, "/", buffer );
-  web->start();
+  QMetaObject::invokeMethod(web, "start", Qt::QueuedConnection);
   qDebug() << "nach web.start()";
+  
   return;
   ////////////////////////
   
@@ -90,8 +91,8 @@ void GetterEPOD::update() {
   }
   if ( link != "" ) {
     Web web( this, hostname, "/" + link, buffer );
-    web.start();
-    web.wait();
+//    web.start();
+//    web.wait();
 
     buffer->open( QBuffer::ReadWrite );
     image.loadFromData( buffer->data(), "jpg" );

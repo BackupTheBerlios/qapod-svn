@@ -215,8 +215,9 @@ void MainWindow::updateImage( QString st ) {
   }
   Web *web = new Web( this, "www.google.com", "/", buffer );
   web->moveToThread(eventLoop);
+  QMetaObject::invokeMethod(web, "start", Qt::QueuedConnection);
   qDebug() << "buffer=" << buffer->data();
-  web->start();
+  //web->start();
   return;
   /////
   
