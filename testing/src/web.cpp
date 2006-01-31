@@ -37,6 +37,7 @@ void Web::start() {
 void Web::httpRequestFinished( int httpid, bool error ) {
   qDebug() << "finished: httpid=" << httpid << " id=" << id;
   //Sleep( 2 );
+  qDebug() << this->thread()->objectName();
   qDebug() << "finished: httpid=" << httpid << " id=" << id;
 
   if ( httpid != id ) {} else {
