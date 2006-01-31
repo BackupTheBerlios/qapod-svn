@@ -211,11 +211,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\getterepod.cpp"
+				>
+			</File>
+			<File
 				RelativePath="MainWindow.cpp"
 				>
 			</File>
 			<File
 				RelativePath="qapod.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\web.cpp"
 				>
 			</File>
 		</Filter>
@@ -277,6 +285,32 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\getterepod.h"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Moc&apos;ing getterepod.h..."
+						CommandLine="$(QTDIR)\bin\moc.exe -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -DNDEBUG -I&quot;$(QTDIR)\include\QtCore&quot; -I&quot;$(QTDIR)\include\QtNetwork&quot; -I&quot;$(QTDIR)\include\QtGui&quot; -I&quot;$(QTDIR)\include\QtXml&quot; -I&quot;$(QTDIR)\include&quot; -I&quot;$(QTDIR)\include\QtDesigner&quot; -I&quot;$(QTDIR)\include\ActiveQt&quot; -I&quot;.\release&quot; -I&quot;.&quot; -I&quot;C:\Qt\4.1.0\mkspecs\win32-msvc2005&quot; &quot;.\getterepod.h&quot; -o &quot;Release\moc_getterepod.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="$(QTDIR)\bin\moc.exe;.\getterepod.h"
+						Outputs="&quot;Release\moc_getterepod.cpp&quot;"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Moc&apos;ing getterepod.h..."
+						CommandLine="$(QTDIR)\bin\moc.exe -DWIN32 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_NETWORK_LIB -D_DEBUG -DDEBUG -I&quot;$(QTDIR)\include\QtCore&quot; -I&quot;$(QTDIR)\include\QtNetwork&quot; -I&quot;$(QTDIR)\include\QtGui&quot; -I&quot;$(QTDIR)\include\QtXml&quot; -I&quot;$(QTDIR)\include&quot; -I&quot;$(QTDIR)\include\QtDesigner&quot; -I&quot;$(QTDIR)\include\ActiveQt&quot; -I&quot;.\debug&quot; -I&quot;.&quot; -I&quot;C:\Qt\4.1.0\mkspecs\win32-msvc2005&quot; &quot;.\getterepod.h&quot; -o &quot;Debug\moc_getterepod.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="$(QTDIR)\bin\moc.exe;.\getterepod.h"
+						Outputs="&quot;Debug\moc_getterepod.cpp&quot;"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="MainWindow.h"
 				>
 				<FileConfiguration
@@ -302,24 +336,38 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\web.h"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Moc&apos;ing web.h..."
+						CommandLine="$(QTDIR)\bin\moc.exe -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -DNDEBUG -I&quot;$(QTDIR)\include\QtCore&quot; -I&quot;$(QTDIR)\include\QtNetwork&quot; -I&quot;$(QTDIR)\include\QtGui&quot; -I&quot;$(QTDIR)\include\QtXml&quot; -I&quot;$(QTDIR)\include&quot; -I&quot;$(QTDIR)\include\QtDesigner&quot; -I&quot;$(QTDIR)\include\ActiveQt&quot; -I&quot;.\release&quot; -I&quot;.&quot; -I&quot;C:\Qt\4.1.0\mkspecs\win32-msvc2005&quot; &quot;.\web.h&quot; -o &quot;Release\moc_web.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="$(QTDIR)\bin\moc.exe;.\web.h"
+						Outputs="&quot;Release\moc_web.cpp&quot;"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Moc&apos;ing web.h..."
+						CommandLine="$(QTDIR)\bin\moc.exe -DWIN32 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_NETWORK_LIB -D_DEBUG -DDEBUG -I&quot;$(QTDIR)\include\QtCore&quot; -I&quot;$(QTDIR)\include\QtNetwork&quot; -I&quot;$(QTDIR)\include\QtGui&quot; -I&quot;$(QTDIR)\include\QtXml&quot; -I&quot;$(QTDIR)\include&quot; -I&quot;$(QTDIR)\include\QtDesigner&quot; -I&quot;$(QTDIR)\include\ActiveQt&quot; -I&quot;.\debug&quot; -I&quot;.&quot; -I&quot;C:\Qt\4.1.0\mkspecs\win32-msvc2005&quot; &quot;.\web.h&quot; -o &quot;Debug\moc_web.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="$(QTDIR)\bin\moc.exe;.\web.h"
+						Outputs="&quot;Debug\moc_web.cpp&quot;"
+					/>
+				</FileConfiguration>
+			</File>
 		</Filter>
 		<Filter
 			Name="Generated Files"
 			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
 			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}"
 			>
-			<File
-				RelativePath="debug\moc_getter.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
 			<File
 				RelativePath="release\moc_getter.cpp"
 				>
@@ -333,7 +381,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="debug\moc_getterapod.cpp"
+				RelativePath="debug\moc_getter.cpp"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -357,7 +405,19 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="release\moc_MainWindow.cpp"
+				RelativePath="debug\moc_getterapod.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\release\moc_getterepod.cpp"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -366,6 +426,41 @@
 						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\debug\moc_getterepod.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="release\moc_MainWindow.cpp"
+				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					ExcludedFromBuild="true"
@@ -386,8 +481,43 @@
 						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\debug\moc_web.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\release\moc_web.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"

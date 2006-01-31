@@ -55,6 +55,7 @@ class QeEventLoop : public QThread {
   protected:
     //! The Thread method, it just calls QThread::exec()
     void run();
+    bool started;
 };
 
 #endif

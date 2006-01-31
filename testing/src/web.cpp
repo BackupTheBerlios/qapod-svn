@@ -36,7 +36,7 @@ void Web::start() {
 
 void Web::httpRequestFinished( int httpid, bool error ) {
   qDebug() << "finished: httpid=" << httpid << " id=" << id;
-  sleep( 2 );
+  //Sleep( 2 );
   qDebug() << "finished: httpid=" << httpid << " id=" << id;
 
   if ( httpid != id ) {} else {
@@ -48,12 +48,16 @@ Web::~Web() {}
 
 
 QeEventLoop::QeEventLoop( void ) : QThread() {
+  started = false;
   start();
+  while (!started)
+    sleep(100);
 }
 
 QeEventLoop::~QeEventLoop( void ) {}
 
 
 void QeEventLoop::run( void ) {
+  started = true;
   exec();
 }
