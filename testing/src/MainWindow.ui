@@ -1,0 +1,469 @@
+<ui version="4.0" >
+ <author></author>
+ <comment></comment>
+ <exportmacro></exportmacro>
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>671</width>
+    <height>575</height>
+   </rect>
+  </property>
+  <property name="minimumSize" >
+   <size>
+    <width>640</width>
+    <height>500</height>
+   </size>
+  </property>
+  <property name="windowTitle" >
+   <string>qAPOD</string>
+  </property>
+  <property name="windowIcon" >
+   <iconset>qapod.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget" >
+   <widget class="QTabWidget" name="tabWidget" >
+    <property name="geometry" >
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>671</width>
+      <height>571</height>
+     </rect>
+    </property>
+    <widget class="QWidget" name="tab" >
+     <attribute name="title" >
+      <string>Main</string>
+     </attribute>
+     <widget class="QListView" name="listView" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>330</width>
+        <height>300</height>
+       </rect>
+      </property>
+      <property name="selectionMode" >
+       <enum>QAbstractItemView::ExtendedSelection</enum>
+      </property>
+      <property name="flow" >
+       <enum>QListView::LeftToRight</enum>
+      </property>
+      <property name="viewMode" >
+       <enum>QListView::IconMode</enum>
+      </property>
+     </widget>
+     <widget class="QProgressBar" name="progressBar" >
+      <property name="geometry" >
+       <rect>
+        <x>520</x>
+        <y>30</y>
+        <width>118</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="value" >
+       <number>24</number>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pbDeleteSelected" >
+      <property name="geometry" >
+       <rect>
+        <x>380</x>
+        <y>120</y>
+        <width>131</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>delete selected</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="imageName" >
+      <property name="geometry" >
+       <rect>
+        <x>340</x>
+        <y>280</y>
+        <width>171</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>311</y>
+        <width>661</width>
+        <height>231</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pbSetBackground" >
+      <property name="geometry" >
+       <rect>
+        <x>380</x>
+        <y>220</y>
+        <width>131</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>set as background</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="updateNow" >
+      <property name="geometry" >
+       <rect>
+        <x>380</x>
+        <y>30</y>
+        <width>131</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>Update Now!</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="updateAll" >
+      <property name="geometry" >
+       <rect>
+        <x>380</x>
+        <y>60</y>
+        <width>131</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>Update All!</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab" >
+     <attribute name="title" >
+      <string>Settings</string>
+     </attribute>
+     <widget class="QWidget" name="widget" >
+      <property name="geometry" >
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>611</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" >
+       <property name="margin" >
+        <number>0</number>
+       </property>
+       <property name="spacing" >
+        <number>6</number>
+       </property>
+       <item>
+        <layout class="QGridLayout" >
+         <property name="margin" >
+          <number>0</number>
+         </property>
+         <property name="spacing" >
+          <number>6</number>
+         </property>
+         <item row="0" column="0" >
+          <widget class="QLabel" name="label" >
+           <property name="text" >
+            <string>Image location:</string>
+           </property>
+           <property name="buddy" >
+            <cstring>imageLocation</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" >
+          <widget class="QLineEdit" name="imageLocation" />
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbBrowseImageLocation" >
+         <property name="text" >
+          <string>Browse...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QGroupBox" name="groupBox" >
+      <property name="geometry" >
+       <rect>
+        <x>30</x>
+        <y>150</y>
+        <width>194</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="title" >
+       <string>If Autostarted:</string>
+      </property>
+      <widget class="QWidget" name="widget" >
+       <property name="geometry" >
+        <rect>
+         <x>10</x>
+         <y>26</y>
+         <width>174</width>
+         <height>77</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" >
+        <property name="margin" >
+         <number>0</number>
+        </property>
+        <property name="spacing" >
+         <number>6</number>
+        </property>
+        <item row="2" column="0" >
+         <widget class="QCheckBox" name="autoClose" >
+          <property name="text" >
+           <string>auto close</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" >
+         <widget class="QCheckBox" name="autoBackground" >
+          <property name="text" >
+           <string>set newest as Background</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" >
+         <widget class="QCheckBox" name="autoUpdateImage" >
+          <property name="text" >
+           <string>update Image</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="widget" >
+      <property name="geometry" >
+       <rect>
+        <x>240</x>
+        <y>160</y>
+        <width>301</width>
+        <height>60</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" >
+       <property name="margin" >
+        <number>0</number>
+       </property>
+       <property name="spacing" >
+        <number>6</number>
+       </property>
+       <item row="1" column="1" >
+        <widget class="QPushButton" name="removeDesktop" >
+         <property name="text" >
+          <string>Remove Desktop Icon</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QPushButton" name="installDesktop" >
+         <property name="text" >
+          <string>Install Desktop Icon</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" >
+        <widget class="QPushButton" name="removeAutostart" >
+         <property name="text" >
+          <string>Remove Autostart Entry</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" >
+        <widget class="QPushButton" name="installAutostart" >
+         <property name="text" >
+          <string>Install Autostart Entry</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="widget" >
+      <property name="geometry" >
+       <rect>
+        <x>30</x>
+        <y>320</y>
+        <width>414</width>
+        <height>52</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" >
+       <property name="margin" >
+        <number>0</number>
+       </property>
+       <property name="spacing" >
+        <number>6</number>
+       </property>
+       <item row="0" column="3" >
+        <widget class="QLabel" name="label_5_2_2" >
+         <property name="text" >
+          <string>Height:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>bgHeight</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3" >
+        <widget class="QLabel" name="label_5_2_2_2_2" >
+         <property name="text" >
+          <string>Height:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>thumbHeight</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QLabel" name="label_4_2" >
+         <property name="text" >
+          <string>Thumbnail image width:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>thumbWidth</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" >
+        <widget class="QLabel" name="label_3" >
+         <property name="text" >
+          <string>Background image width:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>bgWidth</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" >
+        <widget class="QLineEdit" name="bgWidth" />
+       </item>
+       <item row="0" column="4" >
+        <widget class="QLineEdit" name="bgHeight" />
+       </item>
+       <item row="1" column="1" >
+        <widget class="QLineEdit" name="thumbWidth" />
+       </item>
+       <item row="1" column="4" >
+        <widget class="QLineEdit" name="thumbHeight" />
+       </item>
+       <item row="0" column="2" >
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="2" >
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QPushButton" name="pbSaveSettings" >
+      <property name="geometry" >
+       <rect>
+        <x>510</x>
+        <y>454</y>
+        <width>131</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>Save Settings</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="widget" >
+      <property name="geometry" >
+       <rect>
+        <x>30</x>
+        <y>90</y>
+        <width>441</width>
+        <height>68</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" >
+       <property name="margin" >
+        <number>9</number>
+       </property>
+       <property name="spacing" >
+        <number>6</number>
+       </property>
+       <item row="0" column="0" >
+        <widget class="QLabel" name="label_8" >
+         <property name="text" >
+          <string>Desktop:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>desktopType</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" >
+        <widget class="QComboBox" name="desktopType" />
+       </item>
+       <item row="1" column="0" >
+        <widget class="QLabel" name="label_2" >
+         <property name="text" >
+          <string>Source:</string>
+         </property>
+         <property name="buddy" >
+          <cstring>sourceType</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2" >
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="1" colspan="2" >
+        <widget class="QComboBox" name="sourceType" />
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <pixmapfunction></pixmapfunction>
+ <resources/>
+ <connections/>
+</ui>
