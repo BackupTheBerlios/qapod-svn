@@ -26,16 +26,18 @@
 /**
 	@author wolfgang loeffler <wolfgang.loeffler@entropia.biz>
 */
-class Web : public QThread {
+
+class WebObj: public QObject {
     Q_OBJECT
   public:
-    Web( QObject *parent, QString hostname, QString location, QBuffer *buffer );
-    ~Web();
-  protected: //public slots:  
-    void run();
+    WebObj( QObject *parent, QString hostname, QString location, QBuffer *buffer );
+    ~WebObj() {};
+  public slots:
+    void starte();
   private slots:
     void httpRequestFinished( int httpid, bool error ) ;
-
+  public:
+    void run();
   public:
     QBuffer *buff;
 
@@ -44,6 +46,36 @@ class Web : public QThread {
     int id;
     QString host;
     QString loc;
+
+};
+
+class WebEL: public QThread {
+  public:
+    //! Constructor
+    WebEL( void ) {
+      started = false;
+      start();
+      while ( !started )
+        msleep( 100 );
+    }
+    //! Destructor
+  ~WebEL( void ) {};
+  protected:
+    //! The Thread method, it just calls QThread::exec()
+    void run() {
+      started = true;
+      exec();
+    }
+    bool started;
+};
+
+
+class Web : public QObject {
+    Q_OBJECT
+  public:
+    Web( QObject *parent, QString hostname, QString location, QBuffer *buffer );
+    ~Web() {};
+    WebEL *webEL;
 };
 
 class QeEventLoop : public QThread {
@@ -57,5 +89,6 @@ class QeEventLoop : public QThread {
     void run();
     bool started;
 };
+
 
 #endif

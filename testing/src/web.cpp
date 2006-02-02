@@ -19,34 +19,39 @@
 ***************************************************************************/
 #include "web.h"
 
-Web::Web( QObject *parent, QString hostname, QString location , QBuffer *buffer ) : QThread( parent ) {
+Web::Web( QObject *parent, QString hostname, QString location , QBuffer *buffer ) : QObject( parent ) {
+  webEL= new WebEL(); 
+  WebObj *webObj = new WebObj(0, hostname, location, buffer);
+  webObj->moveToThread(webEL);
+  webObj->run();
+  while (webEL->isRunning()) {
+    sleep(1);
+  }
+}
+
+void WebObj::run() {
+  QMetaObject::invokeMethod(this, "starte", Qt::QueuedConnection);
+//  exec();
+}
+
+WebObj::WebObj( QObject *parent, QString hostname, QString location , QBuffer *buffer ) : QObject( parent ) {
   host = hostname;
   loc = location;
   buff = buffer;
-  start();
 }
 
-void Web::run() {
+void WebObj::starte() {
   http = new QHttp( this );
   connect( http, SIGNAL( requestFinished( int, bool ) ), this, SLOT( httpRequestFinished( int, bool ) ) , Qt::QueuedConnection );
   http->setHost( host );
   id = http->get( "/" + loc , buff );
-
-  exec();
 }
 
-void Web::httpRequestFinished( int httpid, bool error ) {
-  qDebug() << "finished: httpid=" << httpid << " id=" << id;
-  sleep( 2 );
-  qDebug() << this->thread()->objectName();
-  qDebug() << "finished: httpid=" << httpid << " id=" << id;
-
+void WebObj::httpRequestFinished( int httpid, bool error ) {
   if ( httpid != id ) {} else {
-    qDebug() << "REALLY.";
+    this->thread()->terminate();
   }
 }
-
-Web::~Web() {}
 
 
 QeEventLoop::QeEventLoop( void ) : QThread() {

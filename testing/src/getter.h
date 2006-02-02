@@ -28,7 +28,7 @@
 /**
 	@author wolfgang loeffler <wolfgang.loeffler@entropia.biz>
 */
-class Getter : virtual public QThread{
+class Getter : virtual public QObject{
     Q_OBJECT
   public:
     Getter( QObject *parent, QString lastmod, QString st );
@@ -36,9 +36,8 @@ class Getter : virtual public QThread{
     QString getDescription() { return description; }
     QString getLastModified() { return lastModified; }
     
+  public slots:
     virtual void update() {};
-  protected:
-    void run(); 
 
   signals:
     void updateFinished(bool havenew, const QString &st);

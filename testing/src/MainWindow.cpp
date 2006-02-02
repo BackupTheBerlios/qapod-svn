@@ -215,28 +215,16 @@ void MainWindow::updateImage( QString st ) {
     eventLoop = new QeEventLoop(); 
   }
   qDebug() << "eventLoop started";
-  Web *web = new Web( 0, "www.google.com", "/", buffer );
-  web->moveToThread(eventLoop);
-  //QMetaObject::invokeMethod(web, "start", Qt::QueuedConnection);
-  qDebug() << "buffer=" << buffer->data();
-  //web->start();
-  return;
-  /////
-  
   
   if ( st == "" ) st = settings->value( "sourcetype" ).toString() ;
   if ( st == "apod" ) {
 //    getter = new GetterAPOD( this, settings->value( "apod:lastmodified:apod" ).toString() , st );
 //    connect ( getter, SIGNAL( updateFinished( bool, QString ) ), this, SLOT( updateImageDone( bool, QString ) ) );
   } else if ( st == "epod" ) {
-    getter = new GetterEPOD( this, settings->value( "apod:lastmodified:epod" ).toString() , st );
+    getter = new GetterEPOD( 0, settings->value( "apod:lastmodified:epod" ).toString() , st );
     connect ( getter, SIGNAL( updateFinished( bool, QString ) ), this, SLOT( updateImageDone( bool, QString ) ) );
-    qDebug() << "connected!";
   }
-//  getter->update();
-  connect(getter, SIGNAL(finished()), getter, SLOT(deleteLater()));
-  getter->start();
-
+  getter->moveToThread(eventLoop);
 }
 
 void MainWindow::updateAll() {

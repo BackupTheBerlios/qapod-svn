@@ -36,22 +36,14 @@ GetterEPOD::GetterEPOD( QObject *parent, QString lastmod , QString st ) : Getter
   hostname = "epod.usra.edu";
 }
 
-
-
 void GetterEPOD::update() {
   image = QImage();
   description = "";
   QBuffer *buffer = new QBuffer(this);
 
-  
-  
-  Web *web = new Web( this, hostname, "/", buffer );
-  //QMetaObject::invokeMethod(web, "start", Qt::QueuedConnection);
-  qDebug() << "nach web.start()";
-  
-  return;
-  ////////////////////////
-  
+  qDebug() << "vor web";
+  Web *web = new Web( 0, hostname, "/", buffer );
+  qDebug() << "nach web";
   // title
   QString s( buffer->buffer().data() );
   description = "";
@@ -90,19 +82,13 @@ void GetterEPOD::update() {
     }
   }
   if ( link != "" ) {
-    Web web( this, hostname, "/" + link, buffer );
-//    web.start();
-//    web.wait();
+    Web *web = new Web( this, hostname, "/" + link, buffer );
 
     buffer->open( QBuffer::ReadWrite );
     image.loadFromData( buffer->data(), "jpg" );
     emit ( updateFinished( true, sourceType ) );
 
   }
-
-
-
-
   qDebug() << "update done";
 }
 

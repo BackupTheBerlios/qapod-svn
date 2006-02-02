@@ -21,13 +21,9 @@
 
 #include <QtGui>
 
-Getter::Getter( QObject *parent, QString lastmod, QString st ) : QThread(parent){
+Getter::Getter( QObject *parent, QString lastmod, QString st ) : QObject(parent){
   parentObj = parent;
   lastModified = lastmod;
   sourceType = st;
+  QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
 }
-
-void Getter::run() {
-  exec();
-}
-
