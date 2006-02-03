@@ -34,11 +34,6 @@ class GetterEPOD : public Getter {
   public:
     GetterEPOD( QObject *parent, QString lastmod , QString st ) ;
     void update() ;
-//  signals:
-//    void updateFinished(bool havenew);
-    
-  private:
-    QString hostname;
 };
 
 #endif

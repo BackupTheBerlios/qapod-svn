@@ -51,17 +51,14 @@ class WebObj: public QObject {
 
 class WebEL: public QThread {
   public:
-    //! Constructor
     WebEL( void ) {
       started = false;
       start();
       while ( !started )
         msleep( 100 );
     }
-    //! Destructor
   ~WebEL( void ) {};
   protected:
-    //! The Thread method, it just calls QThread::exec()
     void run() {
       started = true;
       exec();

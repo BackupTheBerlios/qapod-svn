@@ -20,18 +20,18 @@
 #include "web.h"
 
 Web::Web( QObject *parent, QString hostname, QString location , QBuffer *buffer ) : QObject( parent ) {
-  webEL= new WebEL(); 
-  WebObj *webObj = new WebObj(0, hostname, location, buffer);
-  webObj->moveToThread(webEL);
+  webEL = new WebEL();
+  WebObj *webObj = new WebObj( 0, hostname, location, buffer );
+  webObj->moveToThread( webEL );
   webObj->run();
-  while (webEL->isRunning()) {
-    sleep(1);
+  while ( webEL->isRunning() ) {
+    sleep( 1 );
   }
 }
 
 void WebObj::run() {
-  QMetaObject::invokeMethod(this, "starte", Qt::QueuedConnection);
-//  exec();
+  QMetaObject::invokeMethod( this, "starte", Qt::QueuedConnection );
+  //  exec();
 }
 
 WebObj::WebObj( QObject *parent, QString hostname, QString location , QBuffer *buffer ) : QObject( parent ) {
@@ -45,11 +45,14 @@ void WebObj::starte() {
   connect( http, SIGNAL( requestFinished( int, bool ) ), this, SLOT( httpRequestFinished( int, bool ) ) , Qt::QueuedConnection );
   http->setHost( host );
   id = http->get( "/" + loc , buff );
+  //qDebug() << "getting " << host + "/" + loc;
 }
 
 void WebObj::httpRequestFinished( int httpid, bool error ) {
-  if ( httpid != id ) {} else {
-    this->thread()->terminate();
+  if ( httpid != id ) {
+    //qDebug() << "id=" << id << " httpid=" << httpid;
+  } else {
+    this->thread() ->terminate();
   }
 }
 
@@ -57,8 +60,8 @@ void WebObj::httpRequestFinished( int httpid, bool error ) {
 QeEventLoop::QeEventLoop( void ) : QThread() {
   started = false;
   start();
-  while (!started)
-    msleep(100);
+  while ( !started )
+    msleep( 100 );
 }
 
 QeEventLoop::~QeEventLoop( void ) {}

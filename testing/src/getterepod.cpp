@@ -32,18 +32,16 @@
  */
 
 
-GetterEPOD::GetterEPOD( QObject *parent, QString lastmod , QString st ) : Getter( parent, lastmod, st ) {
-  hostname = "epod.usra.edu";
-}
+GetterEPOD::GetterEPOD( QObject *parent, QString lastmod , QString st ) : Getter( parent, lastmod, st ) {}
 
 void GetterEPOD::update() {
+  QString hostname = "epod.usra.edu";
   image = QImage();
   description = "";
-  QBuffer *buffer = new QBuffer(this);
 
-  qDebug() << "vor web";
-  Web *web = new Web( 0, hostname, "/", buffer );
-  qDebug() << "nach web";
+  QBuffer *buffer = new QBuffer( this );
+  Web( 0, hostname, "/", buffer );
+
   // title
   QString s( buffer->buffer().data() );
   description = "";
@@ -65,11 +63,10 @@ void GetterEPOD::update() {
     }
   }
   if ( link == lastModified ) {
-    qDebug() << "nothing new..." << " link=" << link << " lastmod=" << lastModified;
+    qDebug() << "epod: nothing new...";
     emit ( Getter::updateFinished( false, sourceType ) );
     return ;
   } else {
-    qDebug() << "new..." << " link=" << link << " lastmod=" << lastModified;
     lastModified = link;
   }
 
@@ -82,13 +79,14 @@ void GetterEPOD::update() {
     }
   }
   if ( link != "" ) {
-    Web *web = new Web( this, hostname, "/" + link, buffer );
+    buffer = new QBuffer( this );
+    Web( this, hostname, "/" + link, buffer );
 
     buffer->open( QBuffer::ReadWrite );
     image.loadFromData( buffer->data(), "jpg" );
     emit ( updateFinished( true, sourceType ) );
 
   }
-  qDebug() << "update done";
+  qDebug() << "update epod done";
 }
 

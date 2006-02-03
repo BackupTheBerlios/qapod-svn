@@ -30,28 +30,15 @@
 /**
 	@author wolfgang loeffler <wolfgang.loeffler@entropia.biz>
 */
+
 class GetterAPOD : public Getter {
-    Q_OBJECT
+  Q_OBJECT
   public:
-    GetterAPOD( QObject *parent, QString lastmod, QString st);
+    GetterAPOD( QObject *parent, QString lastmod , QString st ) ;
     void update() ;
-//  signals:
-//    void updateFinished(bool havenew, QString st);
-
-  public slots:
-    void httpRequestFinished( int id, bool error ) ;
-
-
-  private:
-    QHttp *http;
-    QBuffer *buffer;
-    int httpIdIndex;
-    int httpIdImage;
-    QImage image;
-    QString description;
-    QString hostname;
-
 };
+
+
 
 #endif
 

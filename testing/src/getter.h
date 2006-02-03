@@ -32,7 +32,7 @@ class Getter : virtual public QObject{
     Q_OBJECT
   public:
     Getter( QObject *parent, QString lastmod, QString st );
-    QImage getImage() { return QImage(); };
+    QImage getImage() { return image; };
     QString getDescription() { return description; }
     QString getLastModified() { return lastModified; }
     

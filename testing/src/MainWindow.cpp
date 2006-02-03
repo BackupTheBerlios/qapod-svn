@@ -22,7 +22,7 @@
 #include "MainWindow.h"
 
 #include "ui_MainWindow.h"
-// #include "getterapod.h"
+#include "getterapod.h"
 #include "getterepod.h"
 #include "getter.h"
 #include <QString>
@@ -208,23 +208,23 @@ void MainWindow::browseImageLocation() {
 }
 
 void MainWindow::updateImage( QString st ) {
-  
-  QBuffer *buffer = new QBuffer();
-  
+  qDebug() << "update " + st;
   if (eventLoop==NULL) { 
     eventLoop = new QeEventLoop(); 
+    qDebug() << "eventLoop started";
   }
-  qDebug() << "eventLoop started";
+  
+  getter = NULL;
   
   if ( st == "" ) st = settings->value( "sourcetype" ).toString() ;
   if ( st == "apod" ) {
-//    getter = new GetterAPOD( this, settings->value( "apod:lastmodified:apod" ).toString() , st );
-//    connect ( getter, SIGNAL( updateFinished( bool, QString ) ), this, SLOT( updateImageDone( bool, QString ) ) );
+    getter = new GetterAPOD( this, settings->value( "apod:lastmodified:apod" ).toString() , st );
+    connect ( getter, SIGNAL( updateFinished( bool, QString ) ), this, SLOT( updateImageDone( bool, QString ) ) );
   } else if ( st == "epod" ) {
     getter = new GetterEPOD( 0, settings->value( "apod:lastmodified:epod" ).toString() , st );
     connect ( getter, SIGNAL( updateFinished( bool, QString ) ), this, SLOT( updateImageDone( bool, QString ) ) );
   }
-  getter->moveToThread(eventLoop);
+  if (getter != NULL) getter->moveToThread(eventLoop);
 }
 
 void MainWindow::updateAll() {
@@ -257,10 +257,7 @@ void MainWindow::updateList() {
 void MainWindow::updateImageDone( bool havenew, QString pod ) {
   if ( havenew ) {
     settings->setValue( "apod:lastmodified:" + pod, getter->getLastModified() );
-    qDebug() << settings->value( "apod:lastmodified:" + pod ).toString();
-    qDebug() << "apod:lastmodified:" + pod << " ======= " << getter->getLastModified();
     settings->sync();
-    qDebug() << "sett_lastmod=" << qPrintable( settings->value( "apod:lastmodified:" + pod ).toString() );
     QDateTime now = QDateTime::currentDateTime();
     QString fn = settings->value( "imagelocation" ).toString() + "/" + now.toString( FILEFORMAT ) + pod;
     QImage img = getter->getImage();
