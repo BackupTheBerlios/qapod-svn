@@ -25,7 +25,8 @@ Web::Web( QObject *parent, QString hostname, QString location , QBuffer *buffer 
   webObj->moveToThread( webEL );
   webObj->run();
   while ( webEL->isRunning() ) {
-    sleep( 1 );
+//    sleep( 1 ); Sleep is not portable
+    webEL->wait();
   }
 }
 
@@ -52,7 +53,7 @@ void WebObj::httpRequestFinished( int httpid, bool error ) {
   if ( httpid != id ) {
     //qDebug() << "id=" << id << " httpid=" << httpid;
   } else {
-    this->thread() ->terminate();
+    this->thread()->quit(); // Quit stops nicely, terminate kills
   }
 }
 
