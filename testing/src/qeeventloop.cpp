@@ -21,6 +21,8 @@
 
 QeEventLoop::QeEventLoop( void ) : QThread() {
   started = false;
+  connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
+
   start();
   while ( !started )
     msleep( 100 );

@@ -2,14 +2,14 @@
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="3" >
-  <Doc0 NumberOfViews="1" URL="file:///home/wolle/programming/qapod/tmp/testing/src/MainWindow.cpp" >
-   <View0 Type="Source" />
+  <Doc0 NumberOfViews="1" URL="file:///home/wolle/programming/qapod/tmp/testing/src/getter.h" >
+   <View0 line="40" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/wolle/programming/qapod/tmp/testing/src/web.cpp" >
-   <View0 Type="Source" />
+   <View0 line="33" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/wolle/programming/qapod/tmp/testing/src/web.h" >
-   <View0 line="59" Type="Source" />
+  <Doc2 NumberOfViews="1" URL="file:///home/wolle/programming/qapod/tmp/testing/src/qeeventloop.cpp" >
+   <View0 line="32" Type="Source" />
   </Doc2>
  </DocsAndViews>
  <pluginList>

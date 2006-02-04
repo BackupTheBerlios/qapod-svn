@@ -30,7 +30,6 @@ Web::Web( QObject *parent, QString hostname, QString location , QBuffer *buffer 
   }
 }
 Web::~ Web() {
-  if (webEL) delete webEL;
   if (webObj) delete webObj;
 }
 
