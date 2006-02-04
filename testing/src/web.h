@@ -32,7 +32,7 @@ class WebObj: public QObject {
     Q_OBJECT
   public:
     WebObj( QObject *parent, QString hostname, QString location, QBuffer *buffer );
-    ~WebObj() {};
+    ~WebObj();
   public slots:
     void starte();
   private slots:
@@ -54,8 +54,10 @@ class Web : public QObject {
     Q_OBJECT
   public:
     Web( QObject *parent, QString hostname, QString location, QBuffer *buffer );
-    ~Web() {};
+    ~Web();
     QeEventLoop *webEL;
+  private:
+    WebObj *webObj;
 };
 
 

@@ -22,12 +22,16 @@
 
 Web::Web( QObject *parent, QString hostname, QString location , QBuffer *buffer ) : QObject( parent ) {
   webEL = new QeEventLoop();
-  WebObj *webObj = new WebObj( 0, hostname, location, buffer );
+  webObj = new WebObj( 0, hostname, location, buffer );
   webObj->moveToThread( webEL );
   webObj->run();
   while ( webEL->isRunning() ) {
     webEL->wait();
   }
+}
+Web::~ Web() {
+  if (webEL) delete webEL;
+  if (webObj) delete webObj;
 }
 
 void WebObj::run() {
@@ -38,6 +42,10 @@ WebObj::WebObj( QObject *parent, QString hostname, QString location , QBuffer *b
   host = hostname;
   loc = location;
   buff = buffer;
+}
+
+WebObj::~ WebObj() {
+  if (http) delete http; 
 }
 
 void WebObj::starte() {

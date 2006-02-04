@@ -1,22 +1,16 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="5" >
-  <Doc0 NumberOfViews="1" URL="file:///home/wolle/programming/qapod/tmp/testing/src/getter.cpp" >
-   <View0 line="30" Type="Source" />
+ <DocsAndViews NumberOfDocuments="3" >
+  <Doc0 NumberOfViews="1" URL="file:///home/wolle/programming/qapod/tmp/testing/src/MainWindow.cpp" >
+   <View0 Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/wolle/programming/qapod/tmp/testing/src/getter.h" >
-   <View0 line="44" Type="Source" />
+  <Doc1 NumberOfViews="1" URL="file:///home/wolle/programming/qapod/tmp/testing/src/web.cpp" >
+   <View0 Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/wolle/programming/qapod/tmp/testing/src/getterapod.cpp" >
-   <View0 line="73" Type="Source" />
+  <Doc2 NumberOfViews="1" URL="file:///home/wolle/programming/qapod/tmp/testing/src/web.h" >
+   <View0 line="59" Type="Source" />
   </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/wolle/programming/qapod/tmp/testing/src/getterapod.h" >
-   <View0 line="0" Type="Source" />
-  </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:///home/wolle/programming/qapod/tmp/testing/src/MainWindow.cpp" >
-   <View0 line="219" Type="Source" />
-  </Doc4>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
@@ -32,7 +26,7 @@
   </kdevbookmarks>
   <kdevvalgrind>
    <executable path="" params="" />
-   <valgrind path="valgrind" params="--tool=memcheck --tool=memcheck --leak-check=yes" />
+   <valgrind path="valgrind" params="--tool=memcheck --tool=memcheck --tool=memcheck --tool=memcheck --tool=memcheck --leak-check=yes" />
    <calltree path="" params="" />
    <kcachegrind path="" />
   </kdevvalgrind>
