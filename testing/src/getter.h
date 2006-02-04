@@ -20,10 +20,10 @@
 #ifndef GETTER_H
 #define GETTER_H
 
-#include <QObject>
-#include <QImage>
-#include <QString>
-#include <QThread>
+#include <QtGui>
+
+#define FILEFORMAT "yyyyMMddhhmmss"
+
 
 /**
 	@author wolfgang loeffler <wolfgang.loeffler@entropia.biz>
@@ -31,23 +31,26 @@
 class Getter : virtual public QObject{
     Q_OBJECT
   public:
-    Getter( QObject *parent, QString lastmod, QString st );
+    Getter( QObject *parent, QSettings *settings, QString st );
     QImage getImage() { return image; };
     QString getDescription() { return description; }
     QString getLastModified() { return lastModified; }
     
   public slots:
     virtual void update() {};
+    void updateIsDone(bool havenew, QString pod);
 
   signals:
-    void updateFinished(bool havenew, const QString &st);
+    void updateFinished(bool havenew, QString fn);
+    void updateDone(bool havenew, QString pod);
 
   public slots:
 
   public:
     QObject *parentObj;
-    QString lastModified;
+    QSettings *settings;
     QString sourceType;
+    QString lastModified;
     QString description;
     QImage image;
 

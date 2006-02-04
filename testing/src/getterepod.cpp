@@ -32,7 +32,7 @@
  */
 
 
-GetterEPOD::GetterEPOD( QObject *parent, QString lastmod , QString st ) : Getter( parent, lastmod, st ) {}
+GetterEPOD::GetterEPOD( QObject *parent, QSettings *settings , QString st ) : Getter( parent, settings, st ) {}
 
 void GetterEPOD::update() {
   QString hostname = "epod.usra.edu";
@@ -84,7 +84,7 @@ void GetterEPOD::update() {
 
     buffer->open( QBuffer::ReadWrite );
     image.loadFromData( buffer->data(), "jpg" );
-    emit ( updateFinished( true, sourceType ) );
+    emit ( updateDone( true, sourceType ) );
 
   }
   qDebug() << "update epod done";

@@ -34,7 +34,7 @@
 class GetterAPOD : public Getter {
   Q_OBJECT
   public:
-    GetterAPOD( QObject *parent, QString lastmod , QString st ) ;
+    GetterAPOD(  QObject *parent, QSettings *settings, QString st ) ;
     void update() ;
 };
 

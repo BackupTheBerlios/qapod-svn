@@ -21,9 +21,37 @@
 
 #include <QtGui>
 
-Getter::Getter( QObject *parent, QString lastmod, QString st ) : QObject(parent){
+Getter::Getter( QObject *parent, QSettings *settings, QString st ) : QObject( parent ) {
   parentObj = parent;
-  lastModified = lastmod;
+  this->settings = settings;
   sourceType = st;
-  QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
+  lastModified =  settings->value( "apod:lastmodified:" + sourceType ).toString();
+  connect( this, SIGNAL( updateDone( bool, const QString& ) ), this, SLOT( updateIsDone( bool, QString ) ) );
+  QMetaObject::invokeMethod( this, "update", Qt::QueuedConnection );
+}
+
+void Getter::updateIsDone( bool havenew, QString pod ) {
+  QString fn = "";
+  if ( havenew ) {
+    settings->setValue( "apod:lastmodified:" + pod, lastModified );
+    settings->sync();
+    QDateTime now = QDateTime::currentDateTime();
+    fn = settings->value( "imagelocation" ).toString() + "/" + now.toString( FILEFORMAT ) + pod;
+    QImage img = image;
+    img = img.scaled( settings->value( "bgwidth" ).toInt() ,
+                      settings->value( "bgheight" ).toInt() ,
+                      Qt::KeepAspectRatio );
+
+    img.save( fn + ".jpg", "jpg", 80 );
+    img = img.scaled( settings->value( "thumbwidth" ).toInt() ,
+                      settings->value( "thumbheight" ).toInt() ,
+                      Qt::KeepAspectRatio );
+    img.save( fn + "-thumb.jpg", "jpg", 80 );
+    QFile dfile( fn + ".txt" );
+    if ( dfile.open( QFile::WriteOnly | QFile::Truncate ) ) {
+      QTextStream out( &dfile );
+      out << qPrintable( description );
+    } else qDebug() << "unable to write to descrfile " << qPrintable( fn ) << ".txt";
+  }
+  emit ( updateFinished( havenew, fn) );
 }

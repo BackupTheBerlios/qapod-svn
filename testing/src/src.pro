@@ -9,13 +9,15 @@ HEADERS += MainWindow.h \
            getterapod.h \
            getter.h \
            getterepod.h \
-           web.h 
+           web.h \
+           qeeventloop.h 
 SOURCES += qapod.cpp \
            MainWindow.cpp \
            getterapod.cpp \
            getter.cpp \
            getterepod.cpp \
-           web.cpp 
+           web.cpp \
+           qeeventloop.cpp 
 CONFIG += designer thread
 QT += network
 TARGET=../bin/qapod

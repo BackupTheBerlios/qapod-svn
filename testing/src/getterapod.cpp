@@ -32,7 +32,7 @@
 	@author wolfgang loeffler <wolfgang.loeffler@entropia.biz>
  */
 
-GetterAPOD::GetterAPOD( QObject *parent, QString lastmod, QString st ) : Getter( parent, lastmod , st ) {}
+GetterAPOD::GetterAPOD( QObject *parent, QSettings *settings, QString st ) : Getter( parent, settings , st ) {}
 
 void GetterAPOD::update() {
   QString hostname = "antwrp.gsfc.nasa.gov";
@@ -71,7 +71,7 @@ void GetterAPOD::update() {
 
     buffer->open( QBuffer::ReadWrite );
     image.loadFromData( buffer->data(), "jpg" );
-    emit ( updateFinished( true, sourceType ) );
+    emit ( updateDone( true, sourceType ) );
 
   }
   qDebug() << "update apod done";

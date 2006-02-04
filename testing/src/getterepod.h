@@ -32,7 +32,7 @@
 class GetterEPOD : public Getter {
     Q_OBJECT
   public:
-    GetterEPOD( QObject *parent, QString lastmod , QString st ) ;
+    GetterEPOD(  QObject *parent, QSettings *settings, QString st ) ;
     void update() ;
 };
 

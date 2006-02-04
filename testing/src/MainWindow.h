@@ -38,7 +38,6 @@
 #include <QPainter>
 #include "web.h"
 
-#define FILEFORMAT "yyyyMMddhhmmss"
 #define ICONWIDTH 100
 #define ICONHEIGHT 100
 
@@ -92,7 +91,7 @@ class MainWindow : public QMainWindow {
     void anchorClicked ( const QUrl &link);
 
   public slots:
-    void updateImageDone(bool havenew, QString pod);
+    void updateImageDone(bool havenew, QString fn);
     void updateDataReadProgress( int bytesRead, int totalBytes );
 
   private:

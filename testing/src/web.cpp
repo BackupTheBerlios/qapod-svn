@@ -18,21 +18,20 @@
 *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 ***************************************************************************/
 #include "web.h"
+#include "qeeventloop.h"
 
 Web::Web( QObject *parent, QString hostname, QString location , QBuffer *buffer ) : QObject( parent ) {
-  webEL = new WebEL();
+  webEL = new QeEventLoop();
   WebObj *webObj = new WebObj( 0, hostname, location, buffer );
   webObj->moveToThread( webEL );
   webObj->run();
   while ( webEL->isRunning() ) {
-//    sleep( 1 ); Sleep is not portable
     webEL->wait();
   }
 }
 
 void WebObj::run() {
   QMetaObject::invokeMethod( this, "starte", Qt::QueuedConnection );
-  //  exec();
 }
 
 WebObj::WebObj( QObject *parent, QString hostname, QString location , QBuffer *buffer ) : QObject( parent ) {
@@ -58,17 +57,3 @@ void WebObj::httpRequestFinished( int httpid, bool error ) {
 }
 
 
-QeEventLoop::QeEventLoop( void ) : QThread() {
-  started = false;
-  start();
-  while ( !started )
-    msleep( 100 );
-}
-
-QeEventLoop::~QeEventLoop( void ) {}
-
-
-void QeEventLoop::run( void ) {
-  started = true;
-  exec();
-}

@@ -22,6 +22,7 @@
 
 #include <QtGui>
 #include <QtNetwork>
+#include "qeeventloop.h"
 
 /**
 	@author wolfgang loeffler <wolfgang.loeffler@entropia.biz>
@@ -49,43 +50,14 @@ class WebObj: public QObject {
 
 };
 
-class WebEL: public QThread {
-  public:
-    WebEL( void ) {
-      started = false;
-      start();
-      while ( !started )
-        msleep( 100 );
-    }
-  ~WebEL( void ) {};
-  protected:
-    void run() {
-      started = true;
-      exec();
-    }
-    bool started;
-};
-
-
 class Web : public QObject {
     Q_OBJECT
   public:
     Web( QObject *parent, QString hostname, QString location, QBuffer *buffer );
     ~Web() {};
-    WebEL *webEL;
+    QeEventLoop *webEL;
 };
 
-class QeEventLoop : public QThread {
-  public:
-    //! Constructor
-    QeEventLoop( void );
-    //! Destructor
-    ~QeEventLoop( void );
-  protected:
-    //! The Thread method, it just calls QThread::exec()
-    void run();
-    bool started;
-};
 
 
 #endif

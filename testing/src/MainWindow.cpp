@@ -41,6 +41,7 @@
 #include <QtGui>
 
 #include "web.h"
+#include "qeeventloop.h"
 
 #ifdef WIN32
 #include <windows.h>
@@ -218,10 +219,10 @@ void MainWindow::updateImage( QString st ) {
   
   if ( st == "" ) st = settings->value( "sourcetype" ).toString() ;
   if ( st == "apod" ) {
-    getter = new GetterAPOD( this, settings->value( "apod:lastmodified:apod" ).toString() , st );
+    getter = new GetterAPOD( 0, settings , st );
     connect ( getter, SIGNAL( updateFinished( bool, QString ) ), this, SLOT( updateImageDone( bool, QString ) ) );
   } else if ( st == "epod" ) {
-    getter = new GetterEPOD( 0, settings->value( "apod:lastmodified:epod" ).toString() , st );
+    getter = new GetterEPOD( 0, settings , st );
     connect ( getter, SIGNAL( updateFinished( bool, QString ) ), this, SLOT( updateImageDone( bool, QString ) ) );
   }
   if (getter != NULL) getter->moveToThread(eventLoop);
@@ -254,28 +255,8 @@ void MainWindow::updateList() {
   ui.listView->repaint();
 }
 
-void MainWindow::updateImageDone( bool havenew, QString pod ) {
+void MainWindow::updateImageDone( bool havenew, QString fn ) {
   if ( havenew ) {
-    settings->setValue( "apod:lastmodified:" + pod, getter->getLastModified() );
-    settings->sync();
-    QDateTime now = QDateTime::currentDateTime();
-    QString fn = settings->value( "imagelocation" ).toString() + "/" + now.toString( FILEFORMAT ) + pod;
-    QImage img = getter->getImage();
-    img = img.scaled( settings->value( "bgwidth" ).toInt() ,
-                      settings->value( "bgheight" ).toInt() ,
-                      Qt::KeepAspectRatio );
-
-    img.save( fn + ".jpg", "jpg", 80 );
-    img = img.scaled( settings->value( "thumbwidth" ).toInt() ,
-                      settings->value( "thumbheight" ).toInt() ,
-                      Qt::KeepAspectRatio );
-    img.save( fn + "-thumb.jpg", "jpg", 80 );
-    QFile dfile( fn + ".txt" );
-    if ( dfile.open( QFile::WriteOnly | QFile::Truncate ) ) {
-      QTextStream out( &dfile );
-      out << qPrintable( getter->getDescription() );
-    } else qDebug() << "unable to write to descrfile " << qPrintable( fn ) << ".txt";
-
     // autoupdate?
     if ( modeAuto && ( settings->value( "autobackground" ).toInt() == 2 ) ) setBackground( fn + ".jpg" );
   }
