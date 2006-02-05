@@ -21,16 +21,20 @@
 
 #include <QtGui>
 
-Getter::Getter( QObject *parent, QSettings *settings, QString st ) : QObject( parent ) {
+Getter::Getter( QObject *parent, QSettings *settings, const QString&  st ) : QObject( parent ) {
   parentObj = parent;
   this->settings = settings;
   sourceType = st;
-  lastModified =  settings->value( "apod:lastmodified:" + sourceType ).toString();
-  connect( this, SIGNAL( updateDone( bool, const QString& ) ), this, SLOT( updateIsDone( bool, QString ) ) );
+  
+  emit( updateProgress(st, 0, 100) );
+  
+  
+  lastModified = settings->value( "apod:lastmodified:" + sourceType ).toString();
+  connect( this, SIGNAL( updateDone( bool, const QString& ) ), this, SLOT( updateIsDone( bool, const QString& ) ) );
   QMetaObject::invokeMethod( this, "update", Qt::QueuedConnection );
 }
 
-void Getter::updateIsDone( bool havenew, QString pod ) {
+void Getter::updateIsDone( bool havenew, const QString& pod ) {
   QString fn = "";
   if ( havenew ) {
     settings->setValue( "apod:lastmodified:" + pod, lastModified );
@@ -53,5 +57,6 @@ void Getter::updateIsDone( bool havenew, QString pod ) {
       out << qPrintable( description );
     } else qDebug() << "unable to write to descrfile " << qPrintable( fn ) << ".txt";
   }
-  emit ( updateFinished( havenew, fn) );
+  emit( updateProgress(pod, 100, 100) );
+  emit( updateFinished( havenew, fn ) );
 }

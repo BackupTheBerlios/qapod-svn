@@ -104,7 +104,7 @@ void MyDelegate::setDir( QString dir ) {
 }
 
 MainWindow::MainWindow( int argc, char *argv[], QWidget *parent ) : QMainWindow( parent ) {
-  eventLoop= NULL;
+  eventLoop = NULL;
   modeAuto = false;
   ui.setupUi( this );
   ui.desktopType->addItem( "KDE", "kde" );
@@ -210,30 +210,31 @@ void MainWindow::browseImageLocation() {
 
 void MainWindow::updateImage( QString st ) {
   qDebug() << "update " + st;
-  if (eventLoop==NULL) { 
-    eventLoop = new QeEventLoop(); 
+  if ( eventLoop == NULL ) {
+    eventLoop = new QeEventLoop();
     qDebug() << "eventLoop started";
   }
-  
+
   getter = NULL;
-  
-  if ( st == "" ) st = settings->value( "sourcetype" ).toString() ;
-  if ( st == "apod" ) {
-    getter = new GetterAPOD( 0, settings , st );
-    connect ( getter, SIGNAL( updateFinished( bool, QString ) ), this, SLOT( updateImageDone( bool, QString ) ) );
-  } else if ( st == "epod" ) {
-    getter = new GetterEPOD( 0, settings , st );
-    connect ( getter, SIGNAL( updateFinished( bool, QString ) ), this, SLOT( updateImageDone( bool, QString ) ) );
+
+  if ( st == "" ) st = settings->value( "sourcetype" ).toString() ; // old mode
+
+  if ( st == "apod" ) getter = new GetterAPOD( 0, settings , st );
+  else if ( st == "epod" ) getter = new GetterEPOD( 0, settings , st );
+
+  if ( getter != NULL ) {
+    connect( getter, SIGNAL( updateProgress( const QString&, int, int ) ), this, SLOT( updateProgress( const QString&, int, int ) ) );
+    connect( getter, SIGNAL( updateFinished( bool, QString ) ), this, SLOT( updateImageDone( bool, QString ) ) );
+    getter->moveToThread( eventLoop );
   }
-  if (getter != NULL) getter->moveToThread(eventLoop);
 }
 
 void MainWindow::updateAll() {
-  for (int iii=0; iii<ui.sourceType->count(); iii++) {
-    QString st = ui.sourceType->itemData(iii).toString();
-    updateImage( st);
-  }    
-  
+  for ( int iii = 0; iii < ui.sourceType->count(); iii++ ) {
+    QString st = ui.sourceType->itemData( iii ).toString();
+    updateImage( st );
+  }
+
 }
 
 
@@ -255,7 +256,9 @@ void MainWindow::updateList() {
   ui.listView->repaint();
 }
 
-void MainWindow::updateImageDone( bool havenew, QString fn ) {
+void MainWindow::updateImageDone( bool havenew, const QString& fn ) {
+  qDebug() << "updateImageDone";
+
   if ( havenew ) {
     // autoupdate?
     if ( modeAuto && ( settings->value( "autobackground" ).toInt() == 2 ) ) setBackground( fn + ".jpg" );
@@ -267,7 +270,7 @@ void MainWindow::updateImageDone( bool havenew, QString fn ) {
 }
 
 
-void MainWindow::updateDataReadProgress( int bytesRead, int totalBytes ) {
+void MainWindow::updateProgress(const QString& st, int bytesRead, int totalBytes ) {
   ui.progressBar->setMaximum( totalBytes );
   ui.progressBar->setValue( bytesRead );
 }

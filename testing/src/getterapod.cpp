@@ -32,7 +32,7 @@
 	@author wolfgang loeffler <wolfgang.loeffler@entropia.biz>
  */
 
-GetterAPOD::GetterAPOD( QObject *parent, QSettings *settings, QString st ) : Getter( parent, settings , st ) {}
+GetterAPOD::GetterAPOD( QObject *parent, QSettings *settings, const QString& st ) : Getter( parent, settings , st ) {}
 
 void GetterAPOD::update() {
   QString hostname = "antwrp.gsfc.nasa.gov";
@@ -50,7 +50,7 @@ void GetterAPOD::update() {
   QString link = s.mid( posi + 9, endpos - posi - 10 );
   if ( link == lastModified ) {
     qDebug() << "nothing new...";
-    emit ( updateFinished( false, sourceType ) );
+    emit ( updateDone( false, sourceType ) );
     return ;
   } else {
     lastModified = link;

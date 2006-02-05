@@ -32,7 +32,7 @@
  */
 
 
-GetterEPOD::GetterEPOD( QObject *parent, QSettings *settings , QString st ) : Getter( parent, settings, st ) {}
+GetterEPOD::GetterEPOD( QObject *parent, QSettings *settings , const QString&  st ) : Getter( parent, settings, st ) {}
 
 void GetterEPOD::update() {
   QString hostname = "epod.usra.edu";
@@ -64,7 +64,7 @@ void GetterEPOD::update() {
   }
   if ( link == lastModified ) {
     qDebug() << "epod: nothing new...";
-    emit ( Getter::updateFinished( false, sourceType ) );
+    emit ( Getter::updateDone( false, sourceType ) );
     return ;
   } else {
     lastModified = link;

@@ -20,10 +20,7 @@
 #ifndef GETTEREPOD_H
 #define GETTEREPOD_H
 
-#include <QObject>
-#include <QHttp>
-#include <QBuffer>
-#include <QImage>
+#include <QtGui>
 #include "getter.h"
 
 /**
@@ -32,7 +29,7 @@
 class GetterEPOD : public Getter {
     Q_OBJECT
   public:
-    GetterEPOD(  QObject *parent, QSettings *settings, QString st ) ;
+    GetterEPOD(  QObject *parent, QSettings *settings, const QString&  st ) ;
     void update() ;
 };
 

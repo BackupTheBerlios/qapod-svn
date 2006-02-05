@@ -31,18 +31,19 @@
 class Getter : virtual public QObject{
     Q_OBJECT
   public:
-    Getter( QObject *parent, QSettings *settings, QString st );
+    Getter( QObject *parent, QSettings *settings, const QString& st );
     QImage getImage() { return image; };
-    QString getDescription() { return description; }
-    QString getLastModified() { return lastModified; }
+    const QString& getDescription() { return description; }
+    const QString& getLastModified() { return lastModified; }
     
   public slots:
     virtual void update() {};
-    void updateIsDone(bool havenew, QString pod);
+    void updateIsDone(bool havenew, const QString& pod);
 
   signals:
-    void updateFinished(bool havenew, QString fn);
-    void updateDone(bool havenew, QString pod);
+    void updateFinished(bool havenew, const QString& fn);
+    void updateProgress(const QString& st, int bytesRead, int totalBytes );
+    void updateDone(bool havenew, const QString& pod);
 
   public slots:
 
