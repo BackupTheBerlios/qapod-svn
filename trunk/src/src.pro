@@ -14,7 +14,7 @@ SOURCES += qapod.cpp \
            getterapod.cpp \
            getter.cpp \
            getterepod.cpp 
-CONFIG += designer
+CONFIG += designer release
 QT += network
 TARGET=../bin/qapod
 

@@ -103,6 +103,7 @@ void GetterAPOD::httpRequestFinished( int id, bool error ) {
   } else if ( httpIdImage == id ) { // got image!
     buffer->open( QBuffer::ReadWrite );
     image.loadFromData( buffer->data(), "jpg" );
+    qDebug() << "buffer->qba->size=" << buffer->data().size() << " image: h=" << image.height() << " w=" << image.width();
     emit ( updateFinished( true ) );
   }
 }
