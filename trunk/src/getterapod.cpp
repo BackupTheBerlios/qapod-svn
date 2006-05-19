@@ -45,9 +45,10 @@ void GetterAPOD::update() {
   QString s( buffer->buffer().data() );
   int posi = s.indexOf( "<a href=\"image" );
   if ( posi <= 0 ) return ;
-  int endpos = s.indexOf( ">", posi );
+  int endpos = s.indexOf( "\"", posi+10 );
   if ( endpos <= 0 ) return ;
-  QString link = s.mid( posi + 9, endpos - posi - 10 );
+  QString link = s.mid( posi + 9, endpos - posi - 9 );
+  qDebug() << "link=" << link;
   if ( link == lastModified ) {
     qDebug() << "nothing new...";
     emit ( updateDone( false, sourceType ) );
