@@ -224,7 +224,7 @@ void MainWindow::updateImage( QString st ) {
 
   if ( getter != NULL ) {
     connect( getter, SIGNAL( updateProgress( const QString&, int, int ) ), this, SLOT( updateProgress( const QString&, int, int ) ) );
-    connect( getter, SIGNAL( updateFinished( bool, QString ) ), this, SLOT( updateImageDone( bool, QString ) ) );
+    connect( getter, SIGNAL( updateFinished( bool, QString, QString ) ), this, SLOT( updateImageDone( bool, QString, QString ) ) );
     getter->moveToThread( eventLoop );
   }
 }
@@ -256,9 +256,9 @@ void MainWindow::updateList() {
   ui.listView->repaint();
 }
 
-void MainWindow::updateImageDone( bool havenew, const QString& fn ) {
+void MainWindow::updateImageDone( bool havenew, const QString& fn, const QString& updateResult ) {
   qDebug() << "updateImageDone";
-
+  ui.logText->setHtml(ui.logText->toHtml() + updateResult);
   if ( havenew ) {
     // autoupdate?
     if ( modeAuto && ( settings->value( "autobackground" ).toInt() == 2 ) ) setBackground( fn + ".jpg" );
@@ -271,6 +271,7 @@ void MainWindow::updateImageDone( bool havenew, const QString& fn ) {
 
 
 void MainWindow::updateProgress(const QString& st, int bytesRead, int totalBytes ) {
+  ui.logText->setHtml(st + " progress: " + QString::number((bytesRead * 100) / totalBytes) );
   ui.progressBar->setMaximum( totalBytes );
   ui.progressBar->setValue( bytesRead );
 }

@@ -41,6 +41,8 @@ void GetterEPOD::update() {
 
   QBuffer *buffer = new QBuffer( this );
   Web( 0, hostname, "/", buffer );
+  
+  updateResult = "Unknown error...";
 
   // title
   QString s( buffer->buffer().data() );
@@ -63,7 +65,7 @@ void GetterEPOD::update() {
     }
   }
   if ( link == lastModified ) {
-    qDebug() << "epod: nothing new...";
+    updateResult = "No new image!";
     emit ( Getter::updateDone( false, sourceType ) );
     return ;
   } else {
@@ -84,9 +86,10 @@ void GetterEPOD::update() {
 
     buffer->open( QBuffer::ReadWrite );
     image.loadFromData( buffer->data(), "jpg" );
+    updateResult = "Image updated!";
     emit ( updateDone( true, sourceType ) );
-
   }
+  emit ( updateDone( false, sourceType ) );
   qDebug() << "update epod done";
 }
 

@@ -35,13 +35,14 @@ class Getter : virtual public QObject{
     QImage getImage() { return image; };
     const QString& getDescription() { return description; }
     const QString& getLastModified() { return lastModified; }
+    const QString& getUpdateResult() { return updateResult; }
     
   public slots:
     virtual void update() {};
     void updateIsDone(bool havenew, const QString& pod);
 
   signals:
-    void updateFinished(bool havenew, const QString& fn);
+    void updateFinished(bool havenew, const QString& fn, const QString& updateResult);
     void updateProgress(const QString& st, int bytesRead, int totalBytes );
     void updateDone(bool havenew, const QString& pod);
 
@@ -54,6 +55,7 @@ class Getter : virtual public QObject{
     QString lastModified;
     QString description;
     QImage image;
+    QString updateResult;
 
 };
 

@@ -38,10 +38,10 @@ void GetterAPOD::update() {
   QString hostname = "antwrp.gsfc.nasa.gov";
   image = QImage();
   description = "";
-
   QBuffer *buffer = new QBuffer( this );
   Web( 0, hostname, "/apod/astropix.html", buffer );
 
+  updateResult = "Error parsing astropix.html!";
   QString s( buffer->buffer().data() );
   int posi = s.indexOf( "<a href=\"image" );
   if ( posi <= 0 ) return ;
@@ -49,12 +49,19 @@ void GetterAPOD::update() {
   if ( endpos <= 0 ) return ;
   QString link = s.mid( posi + 9, endpos - posi - 9 );
   qDebug() << "link=" << link;
+
   if ( link == lastModified ) {
-    qDebug() << "nothing new...";
+    updateResult = "No new image!";
     emit ( updateDone( false, sourceType ) );
     return ;
   } else {
     lastModified = link;
+  }
+
+  if ( link.endsWith(".gif") ) {
+    updateResult = "Image is gif, maybe animated, skipped!";
+    emit ( updateDone( false, sourceType ) );
+    return ;
   }
 
   posi = s.indexOf( "</center>" , endpos );
@@ -72,9 +79,10 @@ void GetterAPOD::update() {
 
     buffer->open( QBuffer::ReadWrite );
     image.loadFromData( buffer->data(), "jpg" );
+    updateResult = "Image updated!";
     emit ( updateDone( true, sourceType ) );
-
   }
+  emit ( updateDone( false, sourceType ) );
   qDebug() << "update apod done";
 
 }

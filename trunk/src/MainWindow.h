@@ -91,7 +91,7 @@ class MainWindow : public QMainWindow {
     void anchorClicked ( const QUrl &link);
 
   public slots:
-    void updateImageDone(bool havenew, const QString&  fn);
+    void updateImageDone(bool havenew, const QString&  fn, const QString& updateResult);
     void updateProgress(const QString& st, int bytesRead, int totalBytes );
 
   private:

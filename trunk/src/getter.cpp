@@ -58,5 +58,5 @@ void Getter::updateIsDone( bool havenew, const QString& pod ) {
     } else qDebug() << "unable to write to descrfile " << qPrintable( fn ) << ".txt";
   }
   emit( updateProgress(pod, 100, 100) );
-  emit( updateFinished( havenew, fn ) );
+  emit( updateFinished( havenew, fn, pod + ": " + updateResult ) );
 }
