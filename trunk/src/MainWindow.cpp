@@ -135,8 +135,9 @@ MainWindow::MainWindow( int argc, char *argv[], QWidget *parent ) : QMainWindow(
   settings = new QSettings( QCoreApplication::applicationDirPath () + "/qapod.ini", QSettings::IniFormat );
   if ( !settings->contains( "imagelocation" ) ) {
     settings->setValue( "imagelocation", "/tmp/apod" );
-    ui.tabWidget->setCurrentIndex( 1 );
+    ui.tabWidget->setCurrentIndex( 2 );
   }
+  ui.tabWidget->setCurrentIndex( 0 );
   ui.imageLocation->setText( settings->value( "imagelocation" ).toString() );
   if ( !settings->contains( "sourcetype" ) ) settings->setValue( "sourcetype", "apod" );
   ui.sourceType->setCurrentIndex( ui.sourceType->findData( settings->value( "sourcetype" ).toString() ) );
@@ -172,6 +173,28 @@ MainWindow::MainWindow( int argc, char *argv[], QWidget *parent ) : QMainWindow(
 
   // update image
   if ( modeAuto && ( settings->value( "autoupdateimage" ).toInt() == 2 ) ) updateImage();
+  
+  // set Help Text
+  ui.helpText->setHtml("<html><H1>How to get started:</H1><br>"
+      "<font size=4><ol>"
+      "<li> Select the <b>Settings</b> tab:"
+      "<ol>"
+      "<li> Type in or browse for the <b>Image location</b>"
+      "<li> Select your desired image <b>Source</b>"
+      "<li> Install the <b>Autostart Entry</b>, then this Program is started on login."
+      "<p>If you do so, check the appropriate Checkboxes what to do if it is auto-started (likely all three)"
+      "<li> Install a <b>Desktop Icon</b> to easily start this program"
+      "<li> Press <b>Save Settings</b>"
+      "</ol>"
+      "<br>"
+      "<li> Select the <b>Main</b> tab:"
+      "<ol>"
+      "<li>Press <b>Update</b> to update the image!"
+      "<li>Press <b>Set as Background</b> to set the actual selected image as background!"
+      "</ol>"
+      "</ol></font>"
+      "<hr>http://qapod.berlios.de"
+      "</html>");
 }
 
 void MainWindow::saveSettings() {

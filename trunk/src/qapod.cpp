@@ -31,7 +31,7 @@
 
 void myMessageOutput(QtMsgType type, const char *msg)
     {
-    	FILE *fp = fopen("qapod-debug.txt", "a");
+    	FILE *fp = fopen("qapod-debug.txt", "w");
         switch (type) {
         case QtDebugMsg:
             fprintf(fp, "Debug: %s\n", msg);
@@ -55,6 +55,7 @@ int main( int argc, char *argv[] ) {
   qInstallMsgHandler(myMessageOutput);
 #endif
   QApplication app( argc, argv );
+  app.setStyle("plastique");
   MainWindow mw(argc, argv);
   mw.show();
   return app.exec();
