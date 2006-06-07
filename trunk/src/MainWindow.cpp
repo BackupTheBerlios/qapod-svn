@@ -397,7 +397,7 @@ void MainWindow::installAutostart() {
   } else if ( settings->value( "desktop" ) == "winxp" ) {
     QSettings registry( "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", QSettings::NativeFormat );
     QString path = registry.value( "Startup" ).toString();
-    QFile::link( QCoreApplication::applicationFilePath() + "\" \" auto", path + "/qapod.lnk" ); // lol
+    QFile::link( QCoreApplication::applicationFilePath() + "\" \"auto", path + "/qapod.lnk" ); // lol
     QMessageBox::information( this, "qapod", "Now go to " + path + " and right-click on qapod.lnk, select properties and press OK!" );
   }
 }
