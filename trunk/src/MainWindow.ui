@@ -35,7 +35,7 @@
      </rect>
     </property>
     <property name="currentIndex" >
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab" >
      <attribute name="title" >
@@ -1752,7 +1752,7 @@
         <x>30</x>
         <y>150</y>
         <width>194</width>
-        <height>111</height>
+        <height>141</height>
        </rect>
       </property>
       <property name="palette" >
@@ -2030,36 +2030,60 @@
        <property name="geometry" >
         <rect>
          <x>10</x>
-         <y>26</y>
-         <width>174</width>
-         <height>77</height>
+         <y>20</y>
+         <width>181</width>
+         <height>119</height>
         </rect>
        </property>
-       <layout class="QGridLayout" >
+       <layout class="QVBoxLayout" >
         <property name="margin" >
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="spacing" >
          <number>6</number>
         </property>
-        <item row="2" column="0" >
-         <widget class="QCheckBox" name="autoClose" >
-          <property name="text" >
-           <string>auto close</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" >
-         <widget class="QCheckBox" name="autoBackground" >
-          <property name="text" >
-           <string>set newest as Background</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" >
+        <item>
          <widget class="QCheckBox" name="autoUpdateImage" >
           <property name="text" >
            <string>update Image</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="autoBackground" >
+          <property name="text" >
+           <string>set newest as wallpaper</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" >
+          <property name="margin" >
+           <number>0</number>
+          </property>
+          <property name="spacing" >
+           <number>6</number>
+          </property>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="alwaysSetBackground" >
+            <property name="text" >
+             <string>always update</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="autoClose" >
+          <property name="text" >
+           <string>auto close</string>
           </property>
          </widget>
         </item>
@@ -2087,5 +2111,22 @@
  </widget>
  <pixmapfunction></pixmapfunction>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>autoBackground</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>alwaysSetBackground</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>135</x>
+     <y>240</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>146</x>
+     <y>264</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

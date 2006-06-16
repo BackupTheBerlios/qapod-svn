@@ -153,9 +153,10 @@ MainWindow::MainWindow( int argc, char *argv[], QWidget *parent ) : QMainWindow(
   ui.desktopType->setCurrentIndex( ui.desktopType->findData( settings->value( "desktop" ).toString() ) );
   if ( !settings->contains( "autoupdateimage" ) ) settings->setValue( "autoupdateimage", "0" );
   ui.autoUpdateImage->setCheckState( ( Qt::CheckState ) settings->value( "autoupdateimage" ).toInt() );
-
   if ( !settings->contains( "autobackground" ) ) settings->setValue( "autobackground", "0" );
   ui.autoBackground->setCheckState( ( Qt::CheckState ) settings->value( "autobackground" ).toInt() );
+  if ( !settings->contains( "alwayssetbackground" ) ) settings->setValue( "alwayssetbackground", "0" );
+  ui.alwaysSetBackground->setCheckState( ( Qt::CheckState ) settings->value( "alwayssetbackground" ).toInt() );
   if ( !settings->contains( "autoclose" ) ) settings->setValue( "autoclose", "0" );
   ui.autoClose->setCheckState( ( Qt::CheckState ) settings->value( "autoclose" ).toInt() );
 
@@ -207,6 +208,7 @@ void MainWindow::saveSettings() {
   settings->setValue( "desktop", ui.desktopType->itemData( ui.desktopType->currentIndex() ).toString() );
   settings->setValue( "autoupdateimage", QString::number( ui.autoUpdateImage->checkState() ) );
   settings->setValue( "autobackground", QString::number( ui.autoBackground->checkState() ) );
+  settings->setValue( "alwayssetbackground", QString::number( ui.alwaysSetBackground->checkState() ) );
   settings->setValue( "autoclose", QString::number( ui.autoClose->checkState() ) );
 }
 
@@ -285,6 +287,10 @@ void MainWindow::updateImageDone( bool havenew, const QString& fn, const QString
   if ( havenew ) {
     // autoupdate?
     if ( modeAuto && ( settings->value( "autobackground" ).toInt() == 2 ) ) setBackground( fn + ".jpg" );
+  } else {
+    // hack for network drives, w2k doesnt set background if img on network drive
+    if ( modeAuto && ( settings->value( "autobackground" ).toInt() == 2 ) && ( settings->value( "alwayssetbackground" ).toInt() == 2 ) ) 
+      setBackground( fn + ".jpg" );
   }
   // autoclose?
   if ( modeAuto && ( settings->value( "autoclose" ).toInt() == 2 ) ) close();
