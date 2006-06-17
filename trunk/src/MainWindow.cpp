@@ -290,7 +290,7 @@ void MainWindow::updateImageDone( bool havenew, const QString& fn, const QString
   } else {
     // hack for network drives, w2k doesnt set background if img on network drive
     if ( modeAuto && ( settings->value( "autobackground" ).toInt() == 2 ) && ( settings->value( "alwayssetbackground" ).toInt() == 2 ) ) 
-      setBackground( fn + ".jpg" );
+      setBackground( settings->value("currentwallpaper").toString() );
   }
   // autoclose?
   if ( modeAuto && ( settings->value( "autoclose" ).toInt() == 2 ) ) close();
@@ -355,6 +355,7 @@ QString systemErrorToString( DWORD lastErr ) {
 #endif
 
 void MainWindow::setBackground( QString name ) {
+  settings->setValue( "currentwallpaper", name );
   if ( settings->value( "desktop" ) == "kde" ) {
     getShellRes( "dcop", QStringList() << "kdesktop" << "KBackgroundIface" << "setWallpaper" << name << "6" );
   } else if ( settings->value( "desktop" ) == "winxp" ) {
