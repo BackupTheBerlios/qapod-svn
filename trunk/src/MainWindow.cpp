@@ -117,7 +117,6 @@ MainWindow::MainWindow( int argc, char *argv[], QWidget *parent ) : QMainWindow(
   connect( ui.updateAll, SIGNAL( clicked() ), this, SLOT( updateAll() ) );
   connect( ui.pbSaveSettings, SIGNAL( clicked() ), this, SLOT( saveSettings() ) );
   connect( ui.pbBrowseImageLocation, SIGNAL( clicked() ), this, SLOT( browseImageLocation() ) );
-  connect( ui.listView, SIGNAL( clicked ( const QModelIndex & ) ), this, SLOT( listViewclicked( const QModelIndex & ) ) );
   connect( ui.pbDeleteSelected, SIGNAL( clicked() ), this, SLOT( deleteSelected() ) );
   connect( ui.pbSetBackground, SIGNAL( clicked() ), this, SLOT( setAsBackground() ) );
   connect( ui.installDesktop, SIGNAL( clicked() ), this, SLOT( installDesktop() ) );
@@ -279,6 +278,12 @@ void MainWindow::updateList() {
   delegate.setDir( settings->value( "imagelocation" ).toString() );
   ui.listView->setItemDelegate( &delegate );
   ui.listView->repaint();
+  
+  // cannot be done before!
+  connect( ui.listView->selectionModel(), SIGNAL(currentChanged ( const QModelIndex &, const QModelIndex &)), this, SLOT( listViewclicked( const QModelIndex & ) ) );
+
+  QModelIndex mi = model.index(settings->value("recentimagerow").toInt(),0);
+  ui.listView->setCurrentIndex(mi);
 }
 
 void MainWindow::updateImageDone( bool havenew, const QString& fn, const QString& updateResult ) {
@@ -289,8 +294,10 @@ void MainWindow::updateImageDone( bool havenew, const QString& fn, const QString
     if ( modeAuto && ( settings->value( "autobackground" ).toInt() == 2 ) ) setBackground( fn + ".jpg" );
   } else {
     // hack for network drives, w2k doesnt set background if img on network drive
-    if ( modeAuto && ( settings->value( "autobackground" ).toInt() == 2 ) && ( settings->value( "alwayssetbackground" ).toInt() == 2 ) ) 
+    if ( modeAuto && ( settings->value( "autobackground" ).toInt() == 2 ) && ( settings->value( "alwayssetbackground" ).toInt() == 2 ) ) {
       setBackground( settings->value("currentwallpaper").toString() );
+      settings->setValue( "recentimagerow" , 0);
+    }
   }
   // autoclose?
   if ( modeAuto && ( settings->value( "autoclose" ).toInt() == 2 ) ) close();
@@ -331,6 +338,11 @@ void MainWindow::setAsBackground() {
   QString name = mi.model() ->data( mi, Qt::DisplayRole ).toString();
 
   setBackground( settings->value( "imagelocation" ).toString() + "/" + qPrintable( name ) + ".jpg" );
+  
+    // TODO:
+  settings->setValue( "recentimagerow" , mi.row());
+  
+
 }
 
 QString getShellRes( QString cmd, QStringList args ) {
