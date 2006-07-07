@@ -291,12 +291,14 @@ void MainWindow::updateImageDone( bool havenew, const QString& fn, const QString
   ui.logText->setHtml(ui.logText->toHtml() + updateResult);
   if ( havenew ) {
     // autoupdate?
-    if ( modeAuto && ( settings->value( "autobackground" ).toInt() == 2 ) ) setBackground( fn + ".jpg" );
+    if ( modeAuto && ( settings->value( "autobackground" ).toInt() == 2 ) ) {
+      setBackground( fn + ".jpg" );
+      settings->setValue( "recentimagerow" , 0);
+    }
   } else {
     // hack for network drives, w2k doesnt set background if img on network drive
     if ( modeAuto && ( settings->value( "autobackground" ).toInt() == 2 ) && ( settings->value( "alwayssetbackground" ).toInt() == 2 ) ) {
       setBackground( settings->value("currentwallpaper").toString() );
-      settings->setValue( "recentimagerow" , 0);
     }
   }
   // autoclose?
